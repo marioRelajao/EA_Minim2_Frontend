@@ -18,7 +18,7 @@ Estat:
   - Afegit Radio buttons a la llista
   - Fet que el primer item sigui negreta i mes gran  
 
-![My Image](pics/Captura de pantalla 2023-06-15 132931.jpg)
+![My Image](pics/pic1.png)
 
 M'agradaria fer que quan es llegeix el QR, fem una trucada a la API amb l'id del Challenge (que pot ser el propi QR) i la resposta que ha seleccionat l'usuari. Per exemple si seleccionem la resposta 2, la peticio seria:
 	http://API:3002/challenge/post/64594b899176a09080f61967/resposta2
