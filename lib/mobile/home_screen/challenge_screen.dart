@@ -35,6 +35,7 @@ class _MyChallengePageState extends State<MyChallengePage> {
   String? _answer = "";
   List<String>? _questions = [];
   bool isButtonPressed = false;
+  int _selectedQuestionIndex = -1;
 
   @override
   void initState() {
@@ -99,99 +100,126 @@ class _MyChallengePageState extends State<MyChallengePage> {
     } else {
       // Muestra la información del desafío
       return Container(
-        height: 350,
+        height: 600,
         decoration: const BoxDecoration(
           color: Color.fromARGB(255, 25, 25, 25),
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  topRight: Radius.circular(12),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Image.asset(
-                  'images/marker_advanced.png',
-                  height: 120,
-                  width: 120,
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              _name ?? '',
-              style: const TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                _descr ?? '',
-                style: const TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: _questions?.length ?? 0,
-              itemBuilder: (BuildContext context, int index) {
-                final question = _questions![index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    question,
-                    style: const TextStyle(color: Colors.white),
-                    textAlign: TextAlign.center,
+        child: SingleChildScrollView(
+          // Wrap the column with SingleChildScrollView
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12),
                   ),
-                );
-              },
-            ),
-            const SizedBox(height: 24),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const SizedBox(width: 8),
-                if (isButtonPressed)
-                  const CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  )
-                else
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isButtonPressed = true;
-                      });
-                      Navigator.pushNamed(context, '/qr_screen');
-                    },
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.red,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Image.asset(
+                    'images/marker_advanced.png',
+                    height: 120,
+                    width: 120,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                _name ?? '',
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  _descr ?? '',
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(height: 24),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: _questions?.length ?? 0,
+                itemBuilder: (BuildContext context, int index) {
+                  final question = _questions![index];
+                  if (index == 0) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        question,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      padding: const EdgeInsets.all(12),
-                      child: const Icon(
-                        Icons.camera_alt,
-                        color: Colors.white,
-                        size: 24,
+                    );
+                  } else {
+                    return ListTile(
+                      title: Text(
+                        question,
+                        style: const TextStyle(color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                      leading: Radio(
+                        value: index,
+                        groupValue: _selectedQuestionIndex,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedQuestionIndex = value as int;
+                          });
+                        },
+                      ),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const SizedBox(width: 8),
+                  if (isButtonPressed)
+                    const CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    )
+                  else
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isButtonPressed = true;
+                        });
+                        Navigator.pushNamed(context, '/qr_screen');
+                      },
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        child: const Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                          size: 24,
+                        ),
                       ),
                     ),
-                  ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       );
     }

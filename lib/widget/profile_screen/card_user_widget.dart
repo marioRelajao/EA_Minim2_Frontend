@@ -202,27 +202,6 @@ class _MyUserCardState extends State<MyUserCard> {
                       onTap: followOrUnfollow,
                       child: Padding(
                         padding: const EdgeInsets.only(right: 20),
-                        child: Container(
-                          height: 30,
-                          width: 30,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 222, 66, 66),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Center(
-                            child: isFollowing
-                                ? const Icon(
-                                    Icons.check,
-                                    color: Color.fromARGB(255, 242, 242, 242),
-                                    size: 20,
-                                  )
-                                : const Icon(
-                                    Icons.add,
-                                    color: Color.fromARGB(255, 242, 242, 242),
-                                    size: 20,
-                                  ),
-                          ),
-                        ),
                       ),
                     ),
                   ),

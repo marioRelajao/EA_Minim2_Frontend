@@ -116,15 +116,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     }
   }
 
-  void _runFilter(String enteredKeyword) {
-    setState(() {
-      filteredUsers = notFriendsList.where((user) {
-        final lowerCaseKeyword = enteredKeyword.toLowerCase();
-        return user.username.toLowerCase().startsWith(lowerCaseKeyword);
-      }).toList();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,23 +133,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 242, 242, 242),
                           borderRadius: BorderRadius.circular(100.0),
-                        ),
-                        child: TextFormField(
-                          onChanged: (value) => _runFilter(value),
-                          cursorColor: const Color.fromARGB(255, 222, 66, 66),
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 25, 25, 25)),
-                          decoration: const InputDecoration(
-                            hintText: 'Search for a user...',
-                            hintStyle: TextStyle(
-                                color: Color.fromARGB(255, 146, 146, 146)),
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.fromLTRB(18.5, 14, 0, 0),
-                            suffixIcon: Icon(
-                              Icons.search_rounded,
-                              color: Color.fromARGB(255, 222, 66, 66),
-                            ),
-                          ),
                         ),
                       ),
                     ),
