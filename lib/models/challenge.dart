@@ -15,6 +15,8 @@ class Challenge {
     required this.descr,
     required this.exp,
     required this.users,
+    required this.questions,
+    required this.answer,
     this.lat = "0",
     this.long = "0",
   });
@@ -24,6 +26,8 @@ class Challenge {
   final String descr;
   final int exp;
   final List<User> users;
+  final List<String> questions;
+  final String answer;
   final String lat;
   final String long;
 
@@ -33,6 +37,8 @@ class Challenge {
       descr: json["descr"],
       exp: json["exp"],
       users: List<User>.from(json["users"].map((x) => User.fromJson(x))),
+      questions: List<String>.from(json["questions"].map((x) => x.toString())),
+      answer: json["answer"],
       lat: json["lat"],
       long: json["long"]);
 

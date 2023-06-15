@@ -10,11 +10,15 @@ class MyChallengePage extends StatefulWidget {
   final String? selectedChallengeId;
   final String? nameChallenge;
   final String? descrChallenge;
+  final String? answer;
+  final List<String>? questions;
   const MyChallengePage(
       {Key? key,
       this.selectedChallengeId,
       this.nameChallenge,
-      this.descrChallenge})
+      this.descrChallenge,
+      this.questions,
+      this.answer})
       : super(key: key);
 
   @override
@@ -28,6 +32,8 @@ class _MyChallengePageState extends State<MyChallengePage> {
   String? _name = "";
   String? _descr = "";
   String? _exp = "";
+  String? _answer = "";
+  List<String>? _questions = [];
   bool isButtonPressed = false;
 
   @override
@@ -55,6 +61,10 @@ class _MyChallengePageState extends State<MyChallengePage> {
       _idChallenge = widget.selectedChallengeId;
       _name = widget.nameChallenge;
       _descr = widget.descrChallenge;
+      _questions = widget.questions;
+      print(
+          "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      print(_questions);
       _exp = prefs.getString('exp');
     });
   }
@@ -73,7 +83,10 @@ class _MyChallengePageState extends State<MyChallengePage> {
       ),
     );
     var challengeData = response.data;
+    print('Esta es la challengeData: ${challengeData}');
     var challenge = Challenge.fromJson(challengeData);
+    print(
+        'Este es el valor del challenge despues de hacerle FROMJSON: ${challenge.questions}');
     setState(() {
       this.challenge = challenge;
     });
@@ -130,6 +143,21 @@ class _MyChallengePageState extends State<MyChallengePage> {
                 style: const TextStyle(color: Colors.white),
                 textAlign: TextAlign.center,
               ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: _questions?.length ?? 0,
+              itemBuilder: (BuildContext context, int index) {
+                final question = _questions![index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    question,
+                    style: const TextStyle(color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 24),
             Row(
